@@ -81,3 +81,22 @@ function goPrevPage() {
         currentLocation--;
     }
 }
+
+const contactForm = document.querySelector("#contact-form");
+
+
+contactForm.addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+   
+    Toastify({
+        text: "Message has been sent",
+        duration: 3000, 
+        gravity: "bottom",
+        position: "right", 
+        backgroundColor: "green", 
+        stopOnFocus: true,
+    }).showToast();
+
+    contactForm.reset();
+});
