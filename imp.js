@@ -1,4 +1,3 @@
-
 const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 const book = document.querySelector("#book");
@@ -11,10 +10,10 @@ const paper3 = document.querySelector("#p3");
 prevBtn.addEventListener("click", goPrevPage);
 nextBtn.addEventListener("click", goNextPage);
 
-
 let currentLocation = 1;
-let numOfPapers = 3;
-let maxLocation = numOfPapers + 1;
+const numOfPapers = 3;
+const maxLocation = numOfPapers + 1;
+
 
 function openBook() {
     book.style.transform = "translateX(50%)";
@@ -22,8 +21,9 @@ function openBook() {
     nextBtn.style.transform = "translateX(180px)";
 }
 
+
 function closeBook(isAtBeginning) {
-    if(isAtBeginning) {
+    if (isAtBeginning) {
         book.style.transform = "translateX(0%)";
     } else {
         book.style.transform = "translateX(100%)";
@@ -33,9 +33,10 @@ function closeBook(isAtBeginning) {
     nextBtn.style.transform = "translateX(0px)";
 }
 
+
 function goNextPage() {
-    if(currentLocation < maxLocation) {
-        switch(currentLocation) {
+    if (currentLocation < maxLocation) {
+        switch (currentLocation) {
             case 1:
                 openBook();
                 paper1.classList.add("flipped");
@@ -51,15 +52,17 @@ function goNextPage() {
                 closeBook(false);
                 break;
             default:
-                throw new Error("unkown state");
+                throw new Error("Unknown state");
         }
         currentLocation++;
+        updatePrevButtonVisibility();
+        updateNextButtonVisibility() 
     }
 }
 
 function goPrevPage() {
-    if(currentLocation > 1) {
-        switch(currentLocation) {
+    if (currentLocation > 1) {
+        switch (currentLocation) {
             case 2:
                 closeBook(true);
                 paper1.classList.remove("flipped");
@@ -75,28 +78,52 @@ function goPrevPage() {
                 paper3.style.zIndex = 1;
                 break;
             default:
-                throw new Error("unkown state");
+                throw new Error("Unknown state");
         }
-
         currentLocation--;
+        updatePrevButtonVisibility(); 
+        updateNextButtonVisibility()
     }
 }
 
+
+function updatePrevButtonVisibility() {
+    if (currentLocation === 1) {
+        prevBtn.style.display = "none"; 
+    } else {
+        prevBtn.style.display = "inline-block"; 
+    }
+}
+function updateNextButtonVisibility() {
+    if (currentLocation === 4) {
+        nextBtn.style.display = "none"; 
+    } else {
+        nextBtn.style.display = "inline-block"; 
+    }
+}
+
+updatePrevButtonVisibility();
+
 const contactForm = document.querySelector("#contact-form");
-
-
 contactForm.addEventListener("submit", function(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
-   
+ 
     Toastify({
         text: "Message has been sent",
-        duration: 3000, 
-        gravity: "bottom",
-        position: "right", 
-        backgroundColor: "green", 
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "green",
         stopOnFocus: true,
+        style: {
+            color: "white",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
+            borderRadius: "8px",
+            padding: "16px",
+            position: "absolute"
+        }
     }).showToast();
 
-    contactForm.reset();
+    contactForm.reset(); 
 });
